@@ -46,10 +46,15 @@ class FileQueue implements QueueInterface
     public function processQueue($maxItems = 100)
     {
         $count = 0;
-        foreach (new DirectoryIterator($this->directory) as $file) {
-            if ($file->isDot()) {
-                continue;
+
+        $directoryIterator = new \CallbackFilterIterator(
+            new DirectoryIterator($this->directory),
+            function(\SplFileInfo $fileInfo) {
+                return (preg_match("/\.txt$/", $fileInfo->getFilename()));
             }
+        );
+
+        foreach ($directoryIterator as $file) {
 
             if ($count === $maxItems) {
                 return;

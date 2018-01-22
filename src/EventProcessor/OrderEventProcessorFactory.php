@@ -4,20 +4,20 @@
  * @copyright (c) Emico B.V. 2017
  */
 
-namespace Emico\RobinHqLib\Client;
+namespace Emico\RobinHqLib\EventProcessor;
 
 
-use GuzzleHttp\Client;
+use Emico\RobinHqLib\Client\RobinClient;
 use Psr\Container\ContainerInterface;
 
-class RobinClientFactory
+class OrderEventProcessorFactory
 {
     /**
      * @param ContainerInterface $container
-     * @return RobinClient
+     * @return OrderEventProcessor
      */
     public function __invoke(ContainerInterface $container)
     {
-        return new RobinClient(new Client());
+        return new OrderEventProcessor($container->get(RobinClient::class));
     }
 }

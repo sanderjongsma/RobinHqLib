@@ -13,6 +13,8 @@ use Emico\RobinHqLib\Di\Exception\InvalidFactoryException;
 use Emico\RobinHqLib\Di\Exception\ServiceNotFoundException;
 use Emico\RobinHqLib\EventProcessor\CustomerEventProcessor;
 use Emico\RobinHqLib\EventProcessor\CustomerEventProcessorFactory;
+use Emico\RobinHqLib\EventProcessor\OrderEventProcessor;
+use Emico\RobinHqLib\EventProcessor\OrderEventProcessorFactory;
 use Emico\RobinHqLib\Queue\FileQueue;
 use Emico\RobinHqLib\Queue\FileQueueFactory;
 use Emico\RobinHqLib\Queue\QueueInterface;
@@ -30,10 +32,12 @@ class Container implements ContainerInterface
     private $factories = [
         FileQueue::class => FileQueueFactory::class,
         QueueInterface::class => FileQueueFactory::class,
-        CustomerEventProcessor::class => CustomerEventProcessorFactory::class,
+        LoggerInterface::class => LoggerFactory::class,
         RobinClient::class => RobinClientFactory::class,
         LoggerInterface::class => LoggerFactory::class,
         EventProcessingService::class => EventProcessingServiceFactory::class,
+        CustomerEventProcessor::class => CustomerEventProcessorFactory::class,
+        OrderEventProcessor::class => OrderEventProcessorFactory::class,
     ];
 
     /**

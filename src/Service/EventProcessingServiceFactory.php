@@ -8,6 +8,8 @@ namespace Emico\RobinHqLib\Service;
 
 
 use Emico\RobinHqLib\Client\RobinClient;
+use Emico\RobinHqLib\EventProcessor\CustomerEventProcessor;
+use Emico\RobinHqLib\EventProcessor\OrderEventProcessor;
 use Emico\RobinHqLib\Queue\Serializer\EventSerializer;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
@@ -17,9 +19,14 @@ class EventProcessingServiceFactory
 {
     public function __invoke(ContainerInterface $container)
     {
-        return new EventProcessingService(
+        $eventProcessingService = new EventProcessingService(
             $container->get(RobinClient::class),
             new NullLogger()
         );
+
+        $eventProcessingService->registerEventProcessor('customer', $container->get(CustomerEventProcessor::class));
+        $eventProcessingService->registerEventProcessor('order', $container->get(OrderEventProcessor::class));
+
+        return $eventProcessingService;
     }
 }

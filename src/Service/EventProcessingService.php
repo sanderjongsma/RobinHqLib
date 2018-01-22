@@ -8,7 +8,7 @@ namespace Emico\RobinHqLib\Service;
 
 
 use Emico\RobinHqLib\Client\RobinClient;
-use Emico\RobinHqLib\EventProcessor\CustomerEventProcessor;
+use Emico\RobinHqLib\Event\EventInterface;
 use Emico\RobinHqLib\EventProcessor\EventProcessorInterface;
 use Emico\RobinHqLib\Queue\Serializer\EventSerializer;
 use Psr\Log\LoggerInterface;
@@ -56,12 +56,21 @@ class EventProcessingService
 
         echo 'Handling ' . $event->getAction() . ' => ' . $event . PHP_EOL;
 
-        switch ($event->getAction()) {
-            case 'customer':
-                $eventProcessor = new CustomerEventProcessor();
-        }
+        $this->getEventProcessor($event)->processEvent($event);
+    }
 
-        $eventProcessor->processEvent($event);
+    /**
+     * @param EventInterface $event
+     * @return EventProcessorInterface|mixed
+     * @throws \Exception
+     */
+    protected function getEventProcessor(EventInterface $event): EventProcessorInterface
+    {
+        $action = $event->getAction();
+        if (!isset($this->eventProcessors[$action])) {
+            throw new \Exception('No event processor registered for action ' . $action);
+        }
+        return $this->eventProcessors[$action];
     }
 
     /**
