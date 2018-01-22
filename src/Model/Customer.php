@@ -42,6 +42,15 @@ class Customer
     protected $lastOrderDate;
 
     /**
+     * Customer constructor.
+     * @param string $emailAddress
+     */
+    public function __construct(string $emailAddress)
+    {
+        $this->emailAddress = $emailAddress;
+    }
+
+    /**
      * @return string
      */
     public function getEmailAddress(): string
