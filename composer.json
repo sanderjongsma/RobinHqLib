@@ -1,0 +1,23 @@
+{
+  "name": "emico/robinhq-lib",
+  "license": "OSL-3.0",
+  "description": "Robin HQ library",
+  "require": {
+    "php": "~7.0",
+    "guzzlehttp/guzzle": "^6.3",
+    "psr/log": "^1.0",
+    "psr/container": "^1.0"
+  },
+  "type": "library",
+  "autoload": {
+    "psr-4": {
+      "Emico\\RobinHqLib\\": "src"
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://repo.magento.com/"
+    }
+  ]
+}
