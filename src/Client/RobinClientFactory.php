@@ -19,7 +19,13 @@ class RobinClientFactory
      */
     public function __invoke(ContainerInterface $container)
     {
+        /** @var Config $config */
         $config = $container->get(Config::class);
-        return new RobinClient(new Client());
+        $guzzleClient = new Client(
+            [
+                'base_uri' => $config->getApiUri()
+            ]
+        );
+        return new RobinClient($guzzleClient, $config->getApiKey(), $config->getApiSecret());
     }
 }

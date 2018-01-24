@@ -10,7 +10,6 @@ namespace Emico\RobinHqLib\Server;
 use Emico\RobinHqLib\DataProvider\DataProviderInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\JsonResponse;
 
 class RestApiServer

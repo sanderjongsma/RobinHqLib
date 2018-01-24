@@ -6,6 +6,7 @@
 
 namespace Emico\RobinHqLib\Model;
 
+use DateTime;
 use DateTimeInterface;
 use JsonSerializable;
 
@@ -165,8 +166,11 @@ class Customer implements JsonSerializable
     {
         return [
             'email_address' => $this->emailAddress,
+            'customer_since' => $this->customerSince->format(DateTime::ISO8601),
+            'order_count' => $this->orderCount,
+            'total_revenue' => $this->totalRevenue,
+            'currency' => $this->currency,
+            'last_order_date' => $this->lastOrderDate->format(DateTime::ISO8601)
         ];
-
-        //@todo extend json data with other properties
     }
 }

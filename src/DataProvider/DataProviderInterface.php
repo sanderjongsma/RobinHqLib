@@ -11,5 +11,9 @@ use Psr\Http\Message\ServerRequestInterface;
 
 interface DataProviderInterface
 {
+    /**
+     * @param ServerRequestInterface $request
+     * @return JsonSerializable
+     */
     public function fetchData(ServerRequestInterface $request): JsonSerializable;
 }

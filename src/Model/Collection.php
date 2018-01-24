@@ -23,7 +23,7 @@ class Collection implements JsonSerializable
     public function __construct(array $elements)
     {
         $this->elements = $elements;
-    }
+   }
 
     /**
      * Specify data which should be serialized to JSON
