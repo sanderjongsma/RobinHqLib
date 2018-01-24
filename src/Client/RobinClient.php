@@ -47,6 +47,16 @@ class RobinClient
     /**
      * @param Collection $orders
      * @return ResponseInterface
+     * @see https://developers.robinhq.com/api/#!/Orders/Orders_Post
+     */
+    public function postOrders(Collection $orders): ResponseInterface
+    {
+        return $this->post('orders', $orders);
+    }
+
+    /**
+     * @param Collection $orders
+     * @return ResponseInterface
      * @see https://developers.robinhq.com/api/#!/Dynamic/Dynamic_Orders
      */
     public function postDynamicOrders(Collection $orders): ResponseInterface
@@ -61,6 +71,16 @@ class RobinClient
     public function postDynamicOrder(Order $order): ResponseInterface
     {
         return $this->postDynamicOrders(new Collection([$order]));
+    }
+
+    /**
+     * @param Collection $customers
+     * @return ResponseInterface
+     * @see https://developers.robinhq.com/api/#!/Customers/Customers_Post
+     */
+    public function postCustomers(Collection $customers): ResponseInterface
+    {
+        return $this->post('customers', $customers);
     }
 
     /**
@@ -96,7 +116,7 @@ class RobinClient
         ]);
 
         if ($response->getStatusCode() !== 201) {
-            throw new \Exception('Invalid statuscode received ' . $response->getStatusCode());
+            throw new InvalidApiResponseException('Invalid statuscode received ' . $response->getStatusCode());
         }
 
         return $response;

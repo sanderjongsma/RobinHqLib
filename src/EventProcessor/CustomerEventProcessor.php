@@ -8,6 +8,7 @@ namespace Emico\RobinHqLib\EventProcessor;
 
 
 use Emico\RobinHqLib\Client\RobinClient;
+use Emico\RobinHqLib\Event\CustomerEvent;
 use Emico\RobinHqLib\Event\EventInterface;
 
 class CustomerEventProcessor implements EventProcessorInterface
@@ -17,6 +18,10 @@ class CustomerEventProcessor implements EventProcessorInterface
      */
     private $robinClient;
 
+    /**
+     * CustomerEventProcessor constructor.
+     * @param RobinClient $robinClient
+     */
     public function __construct(RobinClient $robinClient)
     {
         $this->robinClient = $robinClient;
@@ -25,9 +30,19 @@ class CustomerEventProcessor implements EventProcessorInterface
     /**
      * @param EventInterface $event
      * @return bool
+     * @todo Logging
      */
     public function processEvent(EventInterface $event)
     {
+        if (!$event instanceof CustomerEvent) {
+            return false;
+        }
+        try {
+            $this->robinClient->postDynamicCustomer($event->getCustomer());
+        } catch (\Exception $exception) {
+            return false;
+        }
 
+        return true;
     }
 }
