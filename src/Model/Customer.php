@@ -43,6 +43,11 @@ class Customer implements JsonSerializable
     protected $lastOrderDate;
 
     /**
+     * @var array
+     */
+    protected $panelView;
+
+    /**
      * Customer constructor.
      * @param string $emailAddress
      */
@@ -148,6 +153,22 @@ class Customer implements JsonSerializable
     }
 
     /**
+     * @return array
+     */
+    public function getPanelView(): array
+    {
+        return $this->panelView;
+    }
+
+    /**
+     * @param array $panelView
+     */
+    public function setPanelView(array $panelView)
+    {
+        $this->panelView = $panelView;
+    }
+
+    /**
      * @return string
      */
     public function __toString(): string
@@ -164,7 +185,7 @@ class Customer implements JsonSerializable
      */
     function jsonSerialize()
     {
-        return [
+        $data = [
             'email_address' => $this->emailAddress,
             'customer_since' => $this->customerSince->format(DateTime::ISO8601),
             'order_count' => $this->orderCount,
@@ -172,5 +193,9 @@ class Customer implements JsonSerializable
             'currency' => $this->currency,
             'last_order_date' => $this->lastOrderDate->format(DateTime::ISO8601)
         ];
+
+        if (!$this->panelView) {
+            $data['panel_view'] = $this->panelView;
+        }
     }
 }

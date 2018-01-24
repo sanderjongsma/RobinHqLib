@@ -53,6 +53,16 @@ class Order implements \JsonSerializable
     protected $firstOrder;
 
     /**
+     * @var array
+     */
+    protected $listView;
+
+    /**
+     * @var array
+     */
+    protected $detailsView;
+
+    /**
      * Order constructor.
      * @param string $orderNumber
      */
@@ -91,22 +101,6 @@ class Order implements \JsonSerializable
     public function setEmailAddress(string $emailAddress)
     {
         $this->emailAddress = $emailAddress;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUrl(): string
-    {
-        return $this->url;
-    }
-
-    /**
-     * @param string $url
-     */
-    public function setUrl(string $url)
-    {
-        $this->url = $url;
     }
 
     /**
@@ -203,6 +197,46 @@ class Order implements \JsonSerializable
     public function setFirstOrder(bool $firstOrder)
     {
         $this->firstOrder = $firstOrder;
+    }
+
+    /**
+     * @return array
+     */
+    public function getListView(): array
+    {
+        return $this->listView;
+    }
+
+    /**
+     * @param array $listView
+     */
+    public function setListView(array $listView)
+    {
+        $this->listView = $listView;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDetailsView(): array
+    {
+        return $this->detailsView;
+    }
+
+    /**
+     * @param array $detailsView
+     */
+    public function setDetailsView(array $detailsView)
+    {
+        $this->detailsView = $detailsView;
+    }
+
+    /**
+     * @param DetailsView $detailsView
+     */
+    public function addDetailsView(DetailsView $detailsView)
+    {
+        $this->detailsView[] = $detailsView;
     }
 
     /**
