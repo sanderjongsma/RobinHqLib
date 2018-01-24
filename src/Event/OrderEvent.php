@@ -39,4 +39,12 @@ class OrderEvent implements EventInterface
     {
         return $this->order;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->order->getOrderNumber();
+    }
 }

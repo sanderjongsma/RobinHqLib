@@ -7,6 +7,7 @@
 namespace Emico\RobinHqLib\Client;
 
 
+use Emico\RobinHqLib\Model\Order;
 use GuzzleHttp\Client;
 
 class RobinClient
@@ -26,7 +27,7 @@ class RobinClient
     }
 
     /**
-     * @param array $orders
+     * @param Order[] $orders
      */
     public function postDynamicOrders(array $orders = [])
     {

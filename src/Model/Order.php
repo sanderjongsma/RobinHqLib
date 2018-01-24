@@ -9,7 +9,7 @@ namespace Emico\RobinHqLib\Model;
 
 use DateTimeInterface;
 
-class Order
+class Order implements \JsonSerializable
 {
     /**
      * @var string
@@ -50,6 +50,15 @@ class Order
      * @var bool
      */
     protected $firstOrder;
+
+    /**
+     * Order constructor.
+     * @param string $orderNumber
+     */
+    public function __construct(string $orderNumber)
+    {
+        $this->orderNumber = $orderNumber;
+    }
 
     /**
      * @return string
@@ -108,11 +117,11 @@ class Order
     }
 
     /**
-     * @param DateTimeInterface $orderByData
+     * @param DateTimeInterface $orderDate
      */
-    public function setOrderDate(DateTimeInterface $orderByData)
+    public function setOrderDate(DateTimeInterface $orderDate)
     {
-        $this->orderDate = $orderByData;
+        $this->orderDate = $orderDate;
     }
 
     /**
@@ -193,5 +202,19 @@ class Order
     public function setFirstOrder(bool $firstOrder)
     {
         $this->firstOrder = $firstOrder;
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'order_number' => $this->orderNumber
+        ];
     }
 }

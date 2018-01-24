@@ -16,15 +16,4 @@ interface QueueInterface
      * @return bool
      */
     public function pushEvent(string $event): bool;
-
-    /**
-     * @param int $maxItems
-     */
-    public function processQueue($maxItems = 100);
-
-    /**
-     * @param EventProcessingService $eventProcessingService
-     * @return void
-     */
-    public function setEventProcessingService(EventProcessingService $eventProcessingService);
 }

@@ -6,9 +6,10 @@
 
 namespace Emico\RobinHqLib\DataProvider;
 
-use Traversable;
+use JsonSerializable;
+use Psr\Http\Message\ServerRequestInterface;
 
 interface DataProviderInterface
 {
-    public function fetchData(): Traversable;
+    public function fetchData(ServerRequestInterface $request): JsonSerializable;
 }

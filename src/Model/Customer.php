@@ -6,10 +6,10 @@
 
 namespace Emico\RobinHqLib\Model;
 
-
 use DateTimeInterface;
+use JsonSerializable;
 
-class Customer
+class Customer implements JsonSerializable
 {
     /**
      * @var string
@@ -152,5 +152,21 @@ class Customer
     public function __toString(): string
     {
         return $this->getEmailAddress();
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    function jsonSerialize()
+    {
+        return [
+            'email_address' => $this->emailAddress,
+        ];
+
+        //@todo extend json data with other properties
     }
 }

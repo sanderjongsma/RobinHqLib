@@ -18,8 +18,14 @@ use Emico\RobinHqLib\EventProcessor\OrderEventProcessorFactory;
 use Emico\RobinHqLib\Queue\FileQueue;
 use Emico\RobinHqLib\Queue\FileQueueFactory;
 use Emico\RobinHqLib\Queue\QueueInterface;
+use Emico\RobinHqLib\Server\RestApiServer;
+use Emico\RobinHqLib\Server\RestApiServerFactory;
+use Emico\RobinHqLib\Service\CustomerService;
+use Emico\RobinHqLib\Service\CustomerServiceFactory;
 use Emico\RobinHqLib\Service\EventProcessingService;
 use Emico\RobinHqLib\Service\EventProcessingServiceFactory;
+use Emico\RobinHqLib\Service\OrderService;
+use Emico\RobinHqLib\Service\OrderServiceFactory;
 use Logger\LoggerFactory;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
@@ -38,6 +44,9 @@ class Container implements ContainerInterface
         EventProcessingService::class => EventProcessingServiceFactory::class,
         CustomerEventProcessor::class => CustomerEventProcessorFactory::class,
         OrderEventProcessor::class => OrderEventProcessorFactory::class,
+        CustomerService::class => CustomerServiceFactory::class,
+        OrderService::class => OrderServiceFactory::class,
+        RestApiServer::class => RestApiServerFactory::class,
     ];
 
     /**

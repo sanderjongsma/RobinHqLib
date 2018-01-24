@@ -4,22 +4,20 @@
  * @copyright (c) Emico B.V. 2017
  */
 
-namespace Emico\RobinHqLib\Client;
+namespace Emico\RobinHqLib\Service;
 
 
-use Emico\RobinHqLib\Config\Config;
-use GuzzleHttp\Client;
+use Emico\RobinHqLib\Queue\QueueInterface;
 use Psr\Container\ContainerInterface;
 
-class RobinClientFactory
+class OrderServiceFactory
 {
     /**
      * @param ContainerInterface $container
-     * @return RobinClient
+     * @return OrderService
      */
     public function __invoke(ContainerInterface $container)
     {
-        $config = $container->get(Config::class);
-        return new RobinClient(new Client());
+        return new OrderService($container->get(QueueInterface::class));
     }
 }
