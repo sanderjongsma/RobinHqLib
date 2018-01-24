@@ -7,6 +7,7 @@
 namespace Emico\RobinHqLib\Model;
 
 
+use DateTime;
 use DateTimeInterface;
 
 class Order implements \JsonSerializable
@@ -213,8 +214,23 @@ class Order implements \JsonSerializable
      */
     public function jsonSerialize()
     {
-        return [
-            'order_number' => $this->orderNumber
+        $data = [
+            'order_number' => $this->orderNumber,
+            'email_address' => $this->emailAddress,
+            'revenue' => $this->revenue,
+            'old_revenue' => $this->oldRevenue,
+            'order_date' => $this->orderDate->format(DateTime::ISO8601),
+            'is_first_order' => $this->firstOrder
         ];
+
+        if ($this->oldProfit !== null) {
+            $data['old_profit'] = $this->oldProfit;
+        }
+
+        if ($this->profit !== null) {
+            $data['profit'] = $this->profit;
+        }
+
+        return $data;
     }
 }
