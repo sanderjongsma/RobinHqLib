@@ -265,6 +265,14 @@ class Order implements \JsonSerializable
             $data['profit'] = $this->profit;
         }
 
-        return $data;
+        if ($this->detailsView !== null) {
+            $data['details_view'] = $this->detailsView;
+        }
+
+        if ($this->listView !== null) {
+            $data['list_view'] = $this->listView;
+        }
+
+        return array_filter($data);
     }
 }
