@@ -11,7 +11,6 @@ use Emico\RobinHqLib\DataProvider\DataProviderInterface;
 use Emico\RobinHqLib\DataProvider\Exception\DataNotFoundException;
 use Emico\RobinHqLib\DataProvider\Exception\InvalidRequestException;
 use Exception;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\JsonResponse;
@@ -25,6 +24,8 @@ class RestApiServer
      */
     public function handleRequest(ServerRequestInterface $request, DataProviderInterface $dataProvider): ResponseInterface
     {
+        //@todo implement header validation / authentication
+
         try {
             $data = $dataProvider->fetchData($request);
         } catch (DataNotFoundException $e) {

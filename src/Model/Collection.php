@@ -23,7 +23,15 @@ class Collection implements JsonSerializable
     public function __construct(array $elements)
     {
         $this->elements = $elements;
-   }
+    }
+
+    /**
+     * @param $element
+     */
+    public function addElement($element)
+    {
+        $this->elements[] = $element;
+    }
 
     /**
      * Specify data which should be serialized to JSON
