@@ -21,6 +21,22 @@ class DetailsView implements JsonSerializable
     protected $data;
 
     /**
+     * @var string
+     */
+    protected $caption;
+
+    /**
+     * DetailsView constructor.
+     * @param string $displayAs
+     * @param array $data
+     */
+    public function __construct(string $displayAs, array $data)
+    {
+        $this->displayAs = $displayAs;
+        $this->data = $data;
+    }
+
+    /**
      * @return string
      */
     public function getDisplayAs(): string
@@ -29,27 +45,11 @@ class DetailsView implements JsonSerializable
     }
 
     /**
-     * @param string $displayAs
-     */
-    public function setDisplayAs(string $displayAs)
-    {
-        $this->displayAs = $displayAs;
-    }
-
-    /**
      * @return array
      */
     public function getData(): array
     {
         return $this->data;
-    }
-
-    /**
-     * @param array $data
-     */
-    public function setData(array $data)
-    {
-        $this->data = $data;
     }
 
     /**
@@ -62,6 +62,22 @@ class DetailsView implements JsonSerializable
     }
 
     /**
+     * @return string|null
+     */
+    public function getCaption()
+    {
+        return $this->caption;
+    }
+
+    /**
+     * @param string $caption
+     */
+    public function setCaption(string $caption)
+    {
+        $this->caption = $caption;
+    }
+
+    /**
      * Specify data which should be serialized to JSON
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
      * @return mixed data which can be serialized by <b>json_encode</b>,
@@ -70,9 +86,15 @@ class DetailsView implements JsonSerializable
      */
     public function jsonSerialize()
     {
-        return [
+        $data = [
             'display_as' => $this->displayAs,
-            'data' => $this->data
+            'data' => $this->data,
         ];
+
+        if ($this->caption) {
+            $data['caption'] = $this->caption;
+        }
+
+        return $data;
     }
 }
