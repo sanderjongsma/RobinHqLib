@@ -11,6 +11,7 @@ use Emico\RobinHqLib\Client\RobinClient;
 use Emico\RobinHqLib\Event\EventInterface;
 use Emico\RobinHqLib\EventProcessor\EventProcessorInterface;
 use Emico\RobinHqLib\Queue\Serializer\EventSerializer;
+use Exception;
 use Psr\Log\LoggerInterface;
 
 class EventProcessingService
@@ -21,7 +22,7 @@ class EventProcessingService
     private $eventSerializer;
 
     /**
-     * @var EventProcessorInterface[]|array
+     * @var EventProcessorInterface[]
      */
     private $eventProcessors;
 
@@ -39,7 +40,7 @@ class EventProcessingService
      * @param RobinClient $robinClient
      * @param LoggerInterface $logger
      */
-    public function __construct(RobinClient $robinClient, LoggerInterface $logger = null)
+    public function __construct(RobinClient $robinClient, LoggerInterface $logger)
     {
         $this->robinClient = $robinClient;
         $this->logger = $logger;
@@ -52,23 +53,25 @@ class EventProcessingService
     {
         $event = $this->getEventSerializer()->unserializeEvent($event);
 
-        $this->logger->info('Processing ' . $event . ' event');
+        $this->logger->info('Processing ' . $event->getAction() . ' event ' . $event);
 
-        echo 'Handling ' . $event->getAction() . ' => ' . $event . PHP_EOL;
-
-        $this->getEventProcessor($event)->processEvent($event);
+        try {
+            $this->getEventProcessor($event)->processEvent($event);
+        } catch (Exception $ex) {
+            $this->logger->error($ex->getMessage());
+        }
     }
 
     /**
      * @param EventInterface $event
      * @return EventProcessorInterface|mixed
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getEventProcessor(EventInterface $event): EventProcessorInterface
     {
         $action = $event->getAction();
         if (!isset($this->eventProcessors[$action])) {
-            throw new \Exception('No event processor registered for action ' . $action);
+            throw new Exception('No event processor registered for action ' . $action);
         }
         return $this->eventProcessors[$action];
     }

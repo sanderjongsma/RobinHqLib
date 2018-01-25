@@ -13,6 +13,7 @@ use Emico\RobinHqLib\Model\Order;
 use GuzzleHttp\Client;
 use JsonSerializable;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerInterface;
 
 class RobinClient
 {
@@ -32,16 +33,23 @@ class RobinClient
     private $apiSecret;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * RobinClient constructor.
      * @param Client $httpClient
      * @param string $apiKey
      * @param string $apiSecret
+     * @param LoggerInterface $logger
      */
-    public function __construct(Client $httpClient, string $apiKey, string $apiSecret)
+    public function __construct(Client $httpClient, string $apiKey, string $apiSecret, LoggerInterface $logger)
     {
         $this->httpClient = $httpClient;
         $this->apiKey = $apiKey;
         $this->apiSecret = $apiSecret;
+        $this->logger = $logger;
     }
 
     /**
@@ -106,10 +114,12 @@ class RobinClient
      * @param string $path
      * @param JsonSerializable|array $payload
      * @return ResponseInterface
-     * @throws \Exception
+     * @throws InvalidApiResponseException
      */
     protected function post(string $path, $payload): ResponseInterface
     {
+        $this->logger->debug('Payload: ' . \GuzzleHttp\json_encode($payload));
+
         $response = $this->httpClient->post($path, [
             'auth' => [ $this->apiKey, $this->apiSecret ],
             'json' => $payload

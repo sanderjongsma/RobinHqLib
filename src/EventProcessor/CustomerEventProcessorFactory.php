@@ -10,6 +10,7 @@ namespace Emico\RobinHqLib\EventProcessor;
 use Emico\RobinHqLib\Client\RobinClient;
 use Emico\RobinHqLib\Queue\EventInterface;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
 
 class CustomerEventProcessorFactory
 {

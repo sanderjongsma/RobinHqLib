@@ -10,6 +10,7 @@ namespace Emico\RobinHqLib\Client;
 use Emico\RobinHqLib\Config\Config;
 use GuzzleHttp\Client;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
 
 class RobinClientFactory
 {
@@ -26,6 +27,6 @@ class RobinClientFactory
                 'base_uri' => $config->getApiUri()
             ]
         );
-        return new RobinClient($guzzleClient, $config->getApiKey(), $config->getApiSecret());
+        return new RobinClient($guzzleClient, $config->getApiKey(), $config->getApiSecret(), $container->get(LoggerInterface::class));
     }
 }

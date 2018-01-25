@@ -10,6 +10,7 @@ namespace Emico\RobinHqLib\EventProcessor;
 use Emico\RobinHqLib\Client\RobinClient;
 use Emico\RobinHqLib\Event\EventInterface;
 use Emico\RobinHqLib\Event\OrderEvent;
+use Psr\Log\LoggerInterface;
 
 class OrderEventProcessor implements EventProcessorInterface
 {
@@ -28,21 +29,12 @@ class OrderEventProcessor implements EventProcessorInterface
     }
 
     /**
-     * @param EventInterface $event
+     * @param EventInterface|OrderEvent $event
      * @return bool
-     * @todo logging
      */
     public function processEvent(EventInterface $event)
     {
-        if (!$event instanceof OrderEvent) {
-            return false;
-        }
-        try {
-            $this->robinClient->postDynamicOrder($event->getOrder());
-        } catch (\Exception $exception) {
-            return false;
-        }
-
+        $this->robinClient->postDynamicOrder($event->getOrder());
         return true;
     }
 }

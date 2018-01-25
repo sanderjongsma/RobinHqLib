@@ -194,8 +194,10 @@ class Customer implements JsonSerializable
             'last_order_date' => $this->lastOrderDate->format(DateTime::ISO8601)
         ];
 
-        if (!$this->panelView) {
+        if ($this->panelView) {
             $data['panel_view'] = $this->panelView;
         }
+
+        return $data;
     }
 }

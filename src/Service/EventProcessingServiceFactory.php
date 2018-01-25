@@ -21,7 +21,7 @@ class EventProcessingServiceFactory
     {
         $eventProcessingService = new EventProcessingService(
             $container->get(RobinClient::class),
-            new NullLogger()
+            $container->get(LoggerInterface::class)
         );
 
         $eventProcessingService->registerEventProcessor('customer', $container->get(CustomerEventProcessor::class));
