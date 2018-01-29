@@ -6,12 +6,8 @@
 
 namespace Emico\RobinHqLib\Server;
 
-
-use Emico\RobinHqLib\DataProvider\DataProviderInterface;
+use Emico\RobinHqLib\Config\Config;
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use Zend\Diactoros\Response;
 
 class RestApiServerFactory
 {
@@ -21,6 +17,8 @@ class RestApiServerFactory
      */
     public function __invoke(ContainerInterface $container)
     {
-        return new RestApiServer();
+        /** @var Config $config */
+        $config = $container->get(Config::class);
+        return new RestApiServer($config->getApiServerKey(), $config->getApiServerSecret());
     }
 }

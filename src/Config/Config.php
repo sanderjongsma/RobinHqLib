@@ -25,6 +25,16 @@ class Config
     protected $apiUri = 'https://api.robinhq.com/';
 
     /**
+     * @var string
+     */
+    protected $apiServerKey;
+
+    /**
+     * @var string
+     */
+    protected $apiServerSecret;
+
+    /**
      * @return string
      */
     public function getApiKey(): string
@@ -70,5 +80,37 @@ class Config
     public function setApiUri(string $apiUri)
     {
         $this->apiUri = $apiUri;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiServerKey(): string
+    {
+        return $this->apiServerKey;
+    }
+
+    /**
+     * @param string $apiServerKey
+     */
+    public function setApiServerKey(string $apiServerKey)
+    {
+        $this->apiServerKey = $apiServerKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiServerSecret(): string
+    {
+        return $this->apiServerSecret;
+    }
+
+    /**
+     * @param string $apiServerSecret
+     */
+    public function setApiServerSecret(string $apiServerSecret)
+    {
+        $this->apiServerSecret = $apiServerSecret;
     }
 }
