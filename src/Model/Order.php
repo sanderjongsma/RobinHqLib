@@ -9,6 +9,7 @@ namespace Emico\RobinHqLib\Model;
 
 use DateTime;
 use DateTimeInterface;
+use Emico\RobinHqLib\Config\Config;
 use Emico\RobinHqLib\Model\Order\DetailsView;
 
 class Order implements \JsonSerializable
@@ -51,7 +52,7 @@ class Order implements \JsonSerializable
     /**
      * @var bool
      */
-    protected $firstOrder;
+    protected $firstOrder = false;
 
     /**
      * @var array
@@ -254,7 +255,7 @@ class Order implements \JsonSerializable
             'email_address' => $this->emailAddress,
             'revenue' => $this->revenue,
             'old_revenue' => $this->oldRevenue,
-            'order_date' => $this->orderDate->format(DateTime::ISO8601),
+            'order_date' => $this->orderDate->format(Config::JSON_DATE_FORMAT),
             'is_first_order' => $this->firstOrder
         ];
 
@@ -274,6 +275,6 @@ class Order implements \JsonSerializable
             $data['list_view'] = $this->listView;
         }
 
-        return array_filter($data);
+        return $data;
     }
 }

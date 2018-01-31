@@ -7,6 +7,7 @@
 namespace Emico\RobinHqLib\Model\Order;
 
 use DateTimeInterface;
+use Emico\RobinHqLib\Config\Config;
 use JsonSerializable;
 
 class DetailsView implements JsonSerializable
@@ -102,7 +103,7 @@ class DetailsView implements JsonSerializable
 
         $data['data'] = array_map(function($val) {
             if ($val instanceof DateTimeInterface) {
-                return $val->format(DATE_ISO8601);
+                return $val->format(Config::JSON_DATE_FORMAT);
             }
             return $val;
         }, $this->data);

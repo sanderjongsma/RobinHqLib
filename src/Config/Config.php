@@ -9,6 +9,9 @@ namespace Emico\RobinHqLib\Config;
 
 class Config
 {
+    /** Date format to use in json serialization */
+    const JSON_DATE_FORMAT = DATE_ISO8601;
+
     /**
      * @var bool
      */
