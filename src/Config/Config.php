@@ -10,6 +10,11 @@ namespace Emico\RobinHqLib\Config;
 class Config
 {
     /**
+     * @var bool
+     */
+    protected $apiEnabled = true;
+
+    /**
      * @var string
      */
     protected $apiKey;
@@ -85,7 +90,7 @@ class Config
     /**
      * @return string
      */
-    public function getApiServerKey(): string
+    public function getApiServerKey()
     {
         return $this->apiServerKey;
     }
@@ -101,7 +106,7 @@ class Config
     /**
      * @return string
      */
-    public function getApiServerSecret(): string
+    public function getApiServerSecret()
     {
         return $this->apiServerSecret;
     }
@@ -112,5 +117,21 @@ class Config
     public function setApiServerSecret(string $apiServerSecret)
     {
         $this->apiServerSecret = $apiServerSecret;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isApiEnabled(): bool
+    {
+        return $this->apiEnabled;
+    }
+
+    /**
+     * @param bool $apiEnabled
+     */
+    public function setApiEnabled(bool $apiEnabled)
+    {
+        $this->apiEnabled = $apiEnabled;
     }
 }

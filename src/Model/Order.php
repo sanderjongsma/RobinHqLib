@@ -60,7 +60,7 @@ class Order implements \JsonSerializable
     /**
      * @var array
      */
-    protected $detailsView;
+    protected $detailsViews;
 
     /**
      * Order constructor.
@@ -220,7 +220,7 @@ class Order implements \JsonSerializable
      */
     public function getDetailsView(): array
     {
-        return $this->detailsView;
+        return $this->detailsViews;
     }
 
     /**
@@ -228,7 +228,7 @@ class Order implements \JsonSerializable
      */
     public function setDetailsView(array $detailsView)
     {
-        $this->detailsView = $detailsView;
+        $this->detailsViews = $detailsView;
     }
 
     /**
@@ -236,7 +236,7 @@ class Order implements \JsonSerializable
      */
     public function addDetailsView(DetailsView $detailsView)
     {
-        $this->detailsView[] = $detailsView;
+        $this->detailsViews[] = $detailsView;
     }
 
     /**
@@ -266,7 +266,7 @@ class Order implements \JsonSerializable
         }
 
         if ($this->detailsView !== null) {
-            $data['details_view'] = $this->detailsView;
+            $data['details_view'] = $this->detailsViews;
         }
 
         if ($this->listView !== null) {

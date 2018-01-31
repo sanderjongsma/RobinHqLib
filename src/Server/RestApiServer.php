@@ -7,36 +7,31 @@
 namespace Emico\RobinHqLib\Server;
 
 
+use Emico\RobinHqLib\Config\Config;
 use Emico\RobinHqLib\DataProvider\DataProviderInterface;
 use Emico\RobinHqLib\DataProvider\Exception\DataNotFoundException;
 use Emico\RobinHqLib\DataProvider\Exception\InvalidRequestException;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\JsonResponse;
 
 class RestApiServer
 {
     /**
-     * @var string
+     * @var Config
      */
-    private $apiKey;
-
-    /**
-     * @var string
-     */
-    private $apiSecret;
+    private $config;
 
     /**
      * RestApiServer constructor.
-     * @param string $apiKey
-     * @param string $apiSecret
+     * @param Config $config
+     * @internal param string $apiKey
+     * @internal param string $apiSecret
      */
-    public function __construct(string $apiKey, string $apiSecret)
+    public function __construct(Config $config)
     {
-        $this->apiKey = $apiKey;
-        $this->apiSecret = $apiSecret;
+        $this->config = $config;
     }
 
     /**
@@ -46,6 +41,10 @@ class RestApiServer
      */
     public function handleRequest(ServerRequestInterface $request, DataProviderInterface $dataProvider): ResponseInterface
     {
+        if (!$this->config->isApiEnabled()) {
+            return new JsonResponse(['message' => 'API feature is not enabled'], 404);
+        }
+
         if (!$this->authenticateRequest($request)) {
             return new JsonResponse(['message' => 'Authentication failed'], 401);
         }
@@ -72,14 +71,24 @@ class RestApiServer
     {
         $serverParams = $request->getServerParams();
 
-        if (!isset($serverParams["PHP_AUTH_USER"]) || !isset($serverParams["PHP_AUTH_PW"])) {
-            return false;
+        $user = null;
+        $password = null;
+
+        /* If using PHP in CGI mode. */
+        if (isset($serverParams['HTTP_AUTHORIZATION'])) {
+            if (preg_match("/Basic\s+(.*)$/i", $serverParams['HTTP_AUTHORIZATION'], $matches)) {
+                list($user, $password) = explode(':', base64_decode($matches[1]), 2);
+            }
+        } else {
+            if (isset($serverParams["PHP_AUTH_USER"])) {
+                $user = $serverParams["PHP_AUTH_USER"];
+            }
+            if (isset($serverParams["PHP_AUTH_PW"])) {
+                $password = $serverParams["PHP_AUTH_PW"];
+            }
         }
 
-        $key = $serverParams["PHP_AUTH_USER"];
-        $secret = $serverParams["PHP_AUTH_PW"];
-
-        if ($key !== $this->apiKey || $secret !== $this->apiSecret) {
+        if ($user !== $this->config->getApiServerKey() || $password !== $this->config->getApiServerSecret()) {
             return false;
         }
 

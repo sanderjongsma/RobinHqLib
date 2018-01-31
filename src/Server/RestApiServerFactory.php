@@ -19,6 +19,6 @@ class RestApiServerFactory
     {
         /** @var Config $config */
         $config = $container->get(Config::class);
-        return new RestApiServer($config->getApiServerKey(), $config->getApiServerSecret());
+        return new RestApiServer($config);
     }
 }
