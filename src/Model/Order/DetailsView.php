@@ -4,12 +4,20 @@
  * @copyright (c) Emico B.V. 2017
  */
 
-namespace Emico\RobinHqLib\Model;
+namespace Emico\RobinHqLib\Model\Order;
 
+use DateTimeInterface;
 use JsonSerializable;
 
 class DetailsView implements JsonSerializable
 {
+    /**
+     * Display mode constants
+     */
+    const DISPLAY_MODE_DETAILS = 'details';
+    const DISPLAY_MODE_COLUMNS = 'columns';
+    const DISPLAY_MODE_ROWS = 'rows';
+
     /**
      * @var string
      */
@@ -86,14 +94,18 @@ class DetailsView implements JsonSerializable
      */
     public function jsonSerialize()
     {
-        $data = [
-            'display_as' => $this->displayAs,
-            'data' => $this->data,
-        ];
+        $data = ['display_as' => $this->displayAs];
 
         if ($this->caption) {
             $data['caption'] = $this->caption;
         }
+
+        $data['data'] = array_map(function($val) {
+            if ($val instanceof DateTimeInterface) {
+                return $val->format(DATE_ISO8601);
+            }
+            return $val;
+        }, $this->data);
 
         return $data;
     }

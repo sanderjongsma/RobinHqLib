@@ -25,12 +25,12 @@ class Customer implements JsonSerializable
     /**
      * @var int
      */
-    protected $orderCount;
+    protected $orderCount = 0;
 
     /**
      * @var float
      */
-    protected $totalRevenue;
+    protected $totalRevenue = 0;
 
     /**
      * @var string

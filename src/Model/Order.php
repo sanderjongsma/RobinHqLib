@@ -9,6 +9,7 @@ namespace Emico\RobinHqLib\Model;
 
 use DateTime;
 use DateTimeInterface;
+use Emico\RobinHqLib\Model\Order\DetailsView;
 
 class Order implements \JsonSerializable
 {
@@ -265,7 +266,7 @@ class Order implements \JsonSerializable
             $data['profit'] = $this->profit;
         }
 
-        if ($this->detailsView !== null) {
+        if ($this->detailsViews !== null) {
             $data['details_view'] = $this->detailsViews;
         }
 
