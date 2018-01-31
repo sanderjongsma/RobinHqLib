@@ -25,6 +25,11 @@ class Order implements \JsonSerializable
     protected $emailAddress;
 
     /**
+     * @var string
+     */
+    protected $url;
+
+    /**
      * @var float
      */
     protected $revenue;
@@ -103,6 +108,22 @@ class Order implements \JsonSerializable
     public function setEmailAddress(string $emailAddress)
     {
         $this->emailAddress = $emailAddress;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     */
+    public function setUrl(string $url)
+    {
+        $this->url = $url;
     }
 
     /**
@@ -218,6 +239,15 @@ class Order implements \JsonSerializable
     }
 
     /**
+     * @param string $key
+     * @param $value
+     */
+    public function addListViewItem(string $key, $value)
+    {
+        $this->listView[$key] = $value;
+    }
+
+    /**
      * @return array
      */
     public function getDetailsView(): array
@@ -253,6 +283,7 @@ class Order implements \JsonSerializable
         $data = [
             'order_number' => $this->orderNumber,
             'email_address' => $this->emailAddress,
+            'url' => $this->url,
             'revenue' => $this->revenue,
             'old_revenue' => $this->oldRevenue,
             'order_date' => $this->orderDate->format(Config::JSON_DATE_FORMAT),

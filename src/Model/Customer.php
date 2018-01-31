@@ -170,6 +170,15 @@ class Customer implements JsonSerializable
     }
 
     /**
+     * @param string $key
+     * @param mixed $value
+     */
+    public function addPanelViewItem(string $key, $value)
+    {
+        $this->panelView[$key] = $value;
+    }
+
+    /**
      * @return string
      */
     public function __toString(): string
