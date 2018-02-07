@@ -35,6 +35,11 @@ class DetailsView implements JsonSerializable
     protected $caption;
 
     /**
+     * @var string
+     */
+    protected $dateFormat = 'Y-m-d h:i:s';
+
+    /**
      * DetailsView constructor.
      * @param string $displayAs
      * @param array $data
@@ -87,6 +92,14 @@ class DetailsView implements JsonSerializable
     }
 
     /**
+     * @param string $dateFormat
+     */
+    public function setDateFormat(string $dateFormat)
+    {
+        $this->dateFormat = $dateFormat;
+    }
+
+    /**
      * Specify data which should be serialized to JSON
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
      * @return mixed data which can be serialized by <b>json_encode</b>,
@@ -103,7 +116,7 @@ class DetailsView implements JsonSerializable
 
         $data['data'] = array_map(function($val) {
             if ($val instanceof DateTimeInterface) {
-                return $val->format(Config::JSON_DATE_FORMAT);
+                return $val->format($this->dateFormat);
             }
             return $val;
         }, $this->data);

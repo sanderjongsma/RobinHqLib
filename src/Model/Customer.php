@@ -19,6 +19,16 @@ class Customer implements JsonSerializable
     protected $emailAddress;
 
     /**
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * @var string
+     */
+    protected $phoneNumber;
+
+    /**
      * @var DateTimeInterface
      */
     protected $customerSince;
@@ -63,6 +73,38 @@ class Customer implements JsonSerializable
     public function getEmailAddress(): string
     {
         return $this->emailAddress;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoneNumber(): string
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @param string $phoneNumber
+     */
+    public function setPhoneNumber(string $phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
     }
 
     /**
@@ -197,7 +239,13 @@ class Customer implements JsonSerializable
     {
         $data = [
             'email_address' => $this->emailAddress,
+<<<<<<< Updated upstream
             'customer_since' => $this->customerSince->format(Config::JSON_DATE_FORMAT),
+=======
+            'name' => $this->name,
+            'phoneNumber' => $this->phoneNumber,
+            'customer_since' => $this->customerSince->format(DateTime::ISO8601),
+>>>>>>> Stashed changes
             'order_count' => $this->orderCount,
             'total_revenue' => $this->totalRevenue,
             'currency' => $this->currency,

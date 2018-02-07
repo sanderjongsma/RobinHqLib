@@ -11,6 +11,7 @@ use DateTime;
 use DateTimeInterface;
 use Emico\RobinHqLib\Config\Config;
 use Emico\RobinHqLib\Model\Order\DetailsView;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class Order implements \JsonSerializable
 {
@@ -27,7 +28,7 @@ class Order implements \JsonSerializable
     /**
      * @var string
      */
-    protected $url;
+    protected $name;
 
     /**
      * @var float
@@ -58,6 +59,11 @@ class Order implements \JsonSerializable
      * @var bool
      */
     protected $firstOrder = false;
+
+    /**
+     * @var string
+     */
+    protected $url;
 
     /**
      * @var array
@@ -113,17 +119,17 @@ class Order implements \JsonSerializable
     /**
      * @return string
      */
-    public function getUrl(): string
+    public function getName(): string
     {
-        return $this->url;
+        return $this->name;
     }
 
     /**
-     * @param string $url
+     * @param string $name
      */
-    public function setUrl(string $url)
+    public function setName(string $name)
     {
-        $this->url = $url;
+        $this->name = $name;
     }
 
     /**
@@ -223,6 +229,22 @@ class Order implements \JsonSerializable
     }
 
     /**
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     */
+    public function setUrl(string $url)
+    {
+        $this->url = $url;
+    }
+
+    /**
      * @return array
      */
     public function getListView(): array
@@ -303,7 +325,15 @@ class Order implements \JsonSerializable
         }
 
         if ($this->listView !== null) {
-            $data['list_view'] = $this->listView;
+            $data['list_view'] = array_map(
+                function ($listViewItem) {
+                    if ($listViewItem instanceof DateTimeInterface) {
+                        $listViewItem = $listViewItem->format('Y-m-d h:i:s');
+                    }
+                    return $listViewItem;
+                },
+                $this->listView
+            );
         }
 
         return $data;
