@@ -239,13 +239,9 @@ class Customer implements JsonSerializable
     {
         $data = [
             'email_address' => $this->emailAddress,
-<<<<<<< Updated upstream
-            'customer_since' => $this->customerSince->format(Config::JSON_DATE_FORMAT),
-=======
             'name' => $this->name,
             'phoneNumber' => $this->phoneNumber,
             'customer_since' => $this->customerSince->format(DateTime::ISO8601),
->>>>>>> Stashed changes
             'order_count' => $this->orderCount,
             'total_revenue' => $this->totalRevenue,
             'currency' => $this->currency,
