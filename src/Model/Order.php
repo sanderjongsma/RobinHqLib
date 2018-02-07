@@ -305,6 +305,7 @@ class Order implements \JsonSerializable
         $data = [
             'order_number' => $this->orderNumber,
             'email_address' => $this->emailAddress,
+            'name' => $this->name,
             'url' => $this->url,
             'revenue' => $this->revenue,
             'old_revenue' => $this->oldRevenue,

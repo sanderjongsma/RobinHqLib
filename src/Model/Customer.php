@@ -244,6 +244,7 @@ class Customer implements JsonSerializable
             'customer_since' => $this->customerSince->format(DateTime::ISO8601),
             'order_count' => $this->orderCount,
             'total_revenue' => $this->totalRevenue,
+            'total_spent' => $this->totalRevenue,
             'currency' => $this->currency,
             'last_order_date' => $this->lastOrderDate->format(Config::JSON_DATE_FORMAT)
         ];
