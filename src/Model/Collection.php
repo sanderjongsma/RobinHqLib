@@ -17,12 +17,19 @@ class Collection implements JsonSerializable
     private $elements;
 
     /**
+     * @var string
+     */
+    private $key;
+
+    /**
      * Collection constructor.
      * @param array $elements
+     * @param string $key
      */
-    public function __construct(array $elements)
+    public function __construct(array $elements, string $key = null)
     {
         $this->elements = $elements;
+        $this->key = $key;
     }
 
     /**
@@ -40,8 +47,11 @@ class Collection implements JsonSerializable
      * which is a value of any type other than a resource.
      * @since 5.4.0
      */
-    function jsonSerialize()
+    public function jsonSerialize()
     {
+        if ($this->key !== null) {
+            return [$this->key => $this->elements];
+        }
         return $this->elements;
     }
 }
