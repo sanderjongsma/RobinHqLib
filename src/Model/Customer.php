@@ -240,7 +240,7 @@ class Customer implements JsonSerializable
         $data = [
             'email_address' => $this->emailAddress,
             'name' => $this->name,
-            'phoneNumber' => $this->phoneNumber,
+            'phone_number' => $this->phoneNumber,
             'customer_since' => $this->customerSince->format(DateTime::ISO8601),
             'order_count' => $this->orderCount,
             'total_revenue' => $this->totalRevenue,
