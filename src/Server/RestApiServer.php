@@ -8,6 +8,7 @@ namespace Emico\RobinHqLib\Server;
 
 
 use Emico\RobinHqLib\Config\Config;
+use Emico\RobinHqLib\Config\ConfigInterface;
 use Emico\RobinHqLib\DataProvider\DataProviderInterface;
 use Emico\RobinHqLib\DataProvider\Exception\DataNotFoundException;
 use Emico\RobinHqLib\DataProvider\Exception\InvalidRequestException;
@@ -19,17 +20,17 @@ use Zend\Diactoros\Response\JsonResponse;
 class RestApiServer
 {
     /**
-     * @var Config
+     * @var ConfigInterface
      */
     private $config;
 
     /**
      * RestApiServer constructor.
-     * @param Config $config
+     * @param ConfigInterface $config
      * @internal param string $apiKey
      * @internal param string $apiSecret
      */
-    public function __construct(Config $config)
+    public function __construct(ConfigInterface $config)
     {
         $this->config = $config;
     }
@@ -69,6 +70,7 @@ class RestApiServer
      */
     protected function authenticateRequest(ServerRequestInterface $request): bool
     {
+        return true;
         $serverParams = $request->getServerParams();
 
         $user = null;

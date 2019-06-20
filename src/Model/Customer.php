@@ -241,7 +241,7 @@ class Customer implements JsonSerializable
             'email_address' => $this->emailAddress,
             'name' => $this->name,
             'phone_number' => $this->phoneNumber,
-            'customer_since' => $this->customerSince->format(DateTime::ISO8601),
+            'customer_since' => $this->customerSince ? $this->customerSince->format(DateTime::ISO8601) : '',
             'order_count' => $this->orderCount,
             'total_revenue' => $this->totalRevenue,
             'total_spent' => $this->totalRevenue,
@@ -249,7 +249,7 @@ class Customer implements JsonSerializable
         ];
 
         if ($this->lastOrderDate) {
-            $data['last_order_date'] = $this->lastOrderDate->format(Config::JSON_DATE_FORMAT);
+            $data['last_order_date'] = $this->lastOrderDate ? $this->lastOrderDate->format(Config::JSON_DATE_FORMAT) : '';
         }
 
         if ($this->panelView) {
