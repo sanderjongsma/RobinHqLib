@@ -8,6 +8,7 @@ namespace Emico\RobinHqLib\Client;
 
 
 use Emico\RobinHqLib\Config\Config;
+use Emico\RobinHqLib\Config\ConfigInterface;
 use Emico\RobinHqLib\Model\Collection;
 use Emico\RobinHqLib\Model\Customer;
 use Emico\RobinHqLib\Model\Order;
@@ -24,16 +25,6 @@ class RobinClient
     private $httpClient;
 
     /**
-     * @var string
-     */
-    private $apiKey;
-
-    /**
-     * @var string
-     */
-    private $apiSecret;
-
-    /**
      * @var LoggerInterface
      */
     private $logger;
@@ -44,10 +35,10 @@ class RobinClient
 
     /**
      * RobinClient constructor.
-     * @param Config $config
+     * @param ConfigInterface $config
      * @param LoggerInterface $logger
      */
-    public function __construct(Config $config, LoggerInterface $logger)
+    public function __construct(ConfigInterface $config, LoggerInterface $logger)
     {
         $this->httpClient = new Client(['base_uri' => $config->getApiUri()]);
         $this->logger = $logger;
