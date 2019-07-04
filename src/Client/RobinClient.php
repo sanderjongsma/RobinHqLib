@@ -7,6 +7,8 @@
 namespace Emico\RobinHqLib\Client;
 
 
+use Emico\RobinHqLib\Config\Config;
+use Emico\RobinHqLib\Config\ConfigInterface;
 use Emico\RobinHqLib\Model\Collection;
 use Emico\RobinHqLib\Model\Customer;
 use Emico\RobinHqLib\Model\Order;
@@ -23,33 +25,24 @@ class RobinClient
     private $httpClient;
 
     /**
-     * @var string
-     */
-    private $apiKey;
-
-    /**
-     * @var string
-     */
-    private $apiSecret;
-
-    /**
      * @var LoggerInterface
      */
     private $logger;
+    /**
+     * @var Config
+     */
+    private $config;
 
     /**
      * RobinClient constructor.
-     * @param Client $httpClient
-     * @param string $apiKey
-     * @param string $apiSecret
+     * @param ConfigInterface $config
      * @param LoggerInterface $logger
      */
-    public function __construct(Client $httpClient, string $apiKey, string $apiSecret, LoggerInterface $logger)
+    public function __construct(ConfigInterface $config, LoggerInterface $logger)
     {
-        $this->httpClient = $httpClient;
-        $this->apiKey = $apiKey;
-        $this->apiSecret = $apiSecret;
+        $this->httpClient = new Client(['base_uri' => $config->getApiUri()]);
         $this->logger = $logger;
+        $this->config = $config;
     }
 
     /**
@@ -121,7 +114,7 @@ class RobinClient
         $this->logger->debug('Payload: ' . \GuzzleHttp\json_encode($payload));
 
         $response = $this->httpClient->post($path, [
-            'auth' => [ $this->apiKey, $this->apiSecret ],
+            'auth' => [ $this->config->getApiKey(), $this->config->getApiSecret() ],
             'json' => $payload
         ]);
 

@@ -27,23 +27,18 @@ class EventProcessingService
     private $eventProcessors;
 
     /**
-     * @var RobinClient
-     */
-    private $robinClient;
-
-    /**
      * @var LoggerInterface
      */
     private $logger;
 
     /**
-     * @param RobinClient $robinClient
      * @param LoggerInterface $logger
+     * @param array $eventProcessors
      */
-    public function __construct(RobinClient $robinClient, LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, array $eventProcessors = [])
     {
-        $this->robinClient = $robinClient;
         $this->logger = $logger;
+        $this->eventProcessors = $eventProcessors;
     }
 
     /**

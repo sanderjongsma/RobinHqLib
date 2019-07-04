@@ -24,14 +24,9 @@ class RobinClientFactory
         $config = $container->get(Config::class);
 
         if (!$config->isApiEnabled()) {
-            throw new \RuntimeException('Cannot instanciate Robin REST client. API is not enabled in configuration');
+            throw new \RuntimeException('Cannot instantiate Robin REST client. API is not enabled in configuration');
         }
 
-        $guzzleClient = new Client(
-            [
-                'base_uri' => $config->getApiUri()
-            ]
-        );
-        return new RobinClient($guzzleClient, $config->getApiKey(), $config->getApiSecret(), $container->get(LoggerInterface::class));
+        return new RobinClient($config, $container->get(LoggerInterface::class));
     }
 }

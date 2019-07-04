@@ -20,7 +20,6 @@ class EventProcessingServiceFactory
     public function __invoke(ContainerInterface $container)
     {
         $eventProcessingService = new EventProcessingService(
-            $container->get(RobinClient::class),
             $container->get(LoggerInterface::class)
         );
 
