@@ -70,7 +70,6 @@ class RestApiServer
      */
     protected function authenticateRequest(ServerRequestInterface $request): bool
     {
-        return true;
         $serverParams = $request->getServerParams();
 
         $user = null;
