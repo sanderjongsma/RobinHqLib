@@ -7,7 +7,7 @@
 namespace Emico\RobinHqLib\Config;
 
 
-class Config
+class Config implements ConfigInterface
 {
     /** Date format to use in json serialization */
     const JSON_DATE_FORMAT = DATE_ISO8601;
@@ -93,7 +93,7 @@ class Config
     /**
      * @return string
      */
-    public function getApiServerKey()
+    public function getApiServerKey(): string
     {
         return $this->apiServerKey;
     }
@@ -109,7 +109,7 @@ class Config
     /**
      * @return string
      */
-    public function getApiServerSecret()
+    public function getApiServerSecret(): string
     {
         return $this->apiServerSecret;
     }
