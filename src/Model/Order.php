@@ -66,6 +66,11 @@ class Order implements \JsonSerializable
     protected $url;
 
     /**
+     * @var string
+     */
+    protected $webstoreUrl;
+
+    /**
      * @var array
      */
     protected $listView;
@@ -245,6 +250,22 @@ class Order implements \JsonSerializable
     }
 
     /**
+     * @return string
+     */
+    public function getWebstoreUrl()
+    {
+        return $this->webstoreUrl;
+    }
+
+    /**
+     * @param string $webstoreUrl
+     */
+    public function setWebstoreUrl(string $webstoreUrl)
+    {
+        $this->webstoreUrl = $webstoreUrl;
+    }
+
+    /**
      * @return array
      */
     public function getListView(): array
@@ -319,6 +340,10 @@ class Order implements \JsonSerializable
 
         if ($this->profit !== null) {
             $data['profit'] = $this->profit;
+        }
+
+        if ($this->webstoreUrl !== null) {
+            $data['webstore_url'] = $this->webstoreUrl;
         }
 
         if ($this->detailsViews !== null) {
