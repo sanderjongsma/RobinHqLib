@@ -9,7 +9,7 @@ namespace Emico\RobinHqLib\Model;
 
 use JsonSerializable;
 
-class Collection implements JsonSerializable
+class Collection implements JsonSerializable, \Countable
 {
     /**
      * @var array
@@ -38,6 +38,14 @@ class Collection implements JsonSerializable
     public function addElement($element)
     {
         $this->elements[] = $element;
+    }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->elements);
     }
 
     /**
