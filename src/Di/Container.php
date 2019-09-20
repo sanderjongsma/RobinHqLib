@@ -15,6 +15,7 @@ use Emico\RobinHqLib\EventProcessor\CustomerEventProcessor;
 use Emico\RobinHqLib\EventProcessor\CustomerEventProcessorFactory;
 use Emico\RobinHqLib\EventProcessor\OrderEventProcessor;
 use Emico\RobinHqLib\EventProcessor\OrderEventProcessorFactory;
+use Emico\RobinHqLib\Logger\LoggerFactory;
 use Emico\RobinHqLib\Queue\FileQueue;
 use Emico\RobinHqLib\Queue\FileQueueFactory;
 use Emico\RobinHqLib\Queue\QueueInterface;
@@ -26,7 +27,6 @@ use Emico\RobinHqLib\Service\EventProcessingService;
 use Emico\RobinHqLib\Service\EventProcessingServiceFactory;
 use Emico\RobinHqLib\Service\OrderService;
 use Emico\RobinHqLib\Service\OrderServiceFactory;
-use Logger\LoggerFactory;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
@@ -40,7 +40,6 @@ class Container implements ContainerInterface
         QueueInterface::class => FileQueueFactory::class,
         LoggerInterface::class => LoggerFactory::class,
         RobinClient::class => RobinClientFactory::class,
-        LoggerInterface::class => LoggerFactory::class,
         EventProcessingService::class => EventProcessingServiceFactory::class,
         CustomerEventProcessor::class => CustomerEventProcessorFactory::class,
         OrderEventProcessor::class => OrderEventProcessorFactory::class,
