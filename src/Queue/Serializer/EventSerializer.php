@@ -7,7 +7,11 @@
 namespace Emico\RobinHqLib\Queue\Serializer;
 
 
+use Emico\RobinHqLib\Event\CustomerEvent;
 use Emico\RobinHqLib\Event\EventInterface;
+use Emico\RobinHqLib\Event\OrderEvent;
+use Emico\RobinHqLib\Model\Customer;
+use Emico\RobinHqLib\Model\Order;
 
 class EventSerializer
 {
@@ -26,7 +30,16 @@ class EventSerializer
      */
     public function unserializeEvent(string $event): EventInterface
     {
-        // @todo check allowed classes
-        return unserialize($event);
+        return unserialize(
+            $event,
+            [
+                'allowed_classes' => [
+                    CustomerEvent::class,
+                    Customer::class,
+                    OrderEvent::class,
+                    Order::class
+                ]
+            ]
+        );
     }
 }

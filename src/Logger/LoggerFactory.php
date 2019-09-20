@@ -4,7 +4,7 @@
  * @copyright (c) Emico B.V. 2017
  */
 
-namespace Logger;
+namespace Emico\RobinHqLib\Logger;
 
 
 use Psr\Container\ContainerInterface;
