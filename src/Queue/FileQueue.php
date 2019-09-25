@@ -9,6 +9,7 @@ namespace Emico\RobinHqLib\Queue;
 
 use DirectoryIterator;
 use Emico\RobinHqLib\Service\EventProcessingService;
+use Psr\Log\LoggerInterface;
 
 class FileQueue implements QueueInterface
 {
@@ -23,11 +24,31 @@ class FileQueue implements QueueInterface
     private $eventProcessingService;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
+     * @param string $directory
+     * @param EventProcessingService $eventProcessingService
+     * @param LoggerInterface $logger
+     */
+    public function __construct(string $directory, EventProcessingService $eventProcessingService, LoggerInterface $logger)
+    {
+        $this->ensureDirectoryExists($directory);
+        $this->directory = $directory;
+        $this->eventProcessingService = $eventProcessingService;
+        $this->logger = $logger;
+    }
+
+    /**
      * @param string $directory
      */
-    public function __construct(string $directory)
+    protected function ensureDirectoryExists(string $directory)
     {
-        $this->directory = $directory;
+        if (!is_dir($directory)) {
+            mkdir($directory, 0777, true);
+        }
     }
 
     /**
@@ -64,21 +85,12 @@ class FileQueue implements QueueInterface
             try {
                 $this->eventProcessingService->processEvent($serializedEvent);
             } catch (\Exception $ex) {
-                //@todo handle issues
+                $this->logger->critical($ex->getMessage());
             }
 
             //@todo maybe archive
             unlink($file->getPathname());
             $count++;
         }
-    }
-
-    /**
-     * @param EventProcessingService $eventProcessingService
-     * @return void
-     */
-    public function setEventProcessingService(EventProcessingService $eventProcessingService)
-    {
-        $this->eventProcessingService = $eventProcessingService;
     }
 }
