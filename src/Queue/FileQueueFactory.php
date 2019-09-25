@@ -8,6 +8,7 @@ namespace Emico\RobinHqLib\Queue;
 
 use Emico\RobinHqLib\Service\EventProcessingService;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
 
 class FileQueueFactory
 {
@@ -17,9 +18,12 @@ class FileQueueFactory
      */
     public function __invoke(ContainerInterface $container)
     {
-        $queue = new FileQueue(__DIR__ . '/../../var/queue');
+        $queue = new FileQueue(
+            __DIR__ . '/../../var/queue',
+            $container->get(EventProcessingService::class),
+            $container->get(LoggerInterface::class)
+        );
 
-        $queue->setEventProcessingService($container->get(EventProcessingService::class));
         return $queue;
     }
 }
