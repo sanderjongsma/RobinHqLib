@@ -7,6 +7,7 @@
 namespace Emico\RobinHqLib\Queue\Serializer;
 
 
+use DateTimeImmutable;
 use Emico\RobinHqLib\Event\CustomerEvent;
 use Emico\RobinHqLib\Event\EventInterface;
 use Emico\RobinHqLib\Event\OrderEvent;
@@ -37,7 +38,8 @@ class EventSerializer
                     CustomerEvent::class,
                     Customer::class,
                     OrderEvent::class,
-                    Order::class
+                    Order::class,
+                    DateTimeImmutable::class
                 ]
             ]
         );
