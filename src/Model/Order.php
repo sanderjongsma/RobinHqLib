@@ -236,7 +236,7 @@ class Order implements \JsonSerializable
     /**
      * @return string
      */
-    public function getUrl(): string
+    public function getUrl()
     {
         return $this->url;
     }
