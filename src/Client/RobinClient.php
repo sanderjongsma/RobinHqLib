@@ -7,6 +7,7 @@
 namespace Emico\RobinHqLib\Client;
 
 
+use Emico\RobinHqLib\Client\Exception\InvalidApiResponseException;
 use Emico\RobinHqLib\Config\Config;
 use Emico\RobinHqLib\Config\ConfigInterface;
 use Emico\RobinHqLib\Model\Collection;

@@ -5,7 +5,7 @@
  * @copyright (c) Emico B.V. 2017
  */
 
-namespace Emico\RobinHqLib\Client;
+namespace Emico\RobinHqLib\Client\Exception;
 
 use Exception;
 
