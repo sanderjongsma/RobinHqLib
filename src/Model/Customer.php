@@ -235,7 +235,8 @@ class Customer implements JsonSerializable
      * which is a value of any type other than a resource.
      * @since 5.4.0
      */
-    function jsonSerialize()
+    #[\ReturnTypeWillChange]
+    public function jsonSerialize()
     {
         $data = [
             'email_address' => $this->emailAddress,
