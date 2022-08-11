@@ -55,6 +55,7 @@ class Collection implements JsonSerializable, \Countable
      * which is a value of any type other than a resource.
      * @since 5.4.0
      */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         if ($this->key !== null) {
