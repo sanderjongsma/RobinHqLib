@@ -236,7 +236,7 @@ class Customer implements JsonSerializable
      * @since 5.4.0
      */
     #[\ReturnTypeWillChange]
-    function jsonSerialize()
+    public function jsonSerialize()
     {
         $data = [
             'email_address' => $this->emailAddress,
