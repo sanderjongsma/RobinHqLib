@@ -43,7 +43,7 @@ class Collection implements JsonSerializable, \Countable
     /**
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->elements);
     }
